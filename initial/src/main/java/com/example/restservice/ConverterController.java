@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ConverterController {
 
-    private static final String template = "Markov chain, %s!";
+    private static final String testData = "The theremin is there, right? Yes, it is.";
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/converter")
-    public Converter converter(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Converter(counter.incrementAndGet(), String.format("markov"), String.format(template, name));
+    public Converter converter(@RequestParam(value = "testStr", defaultValue = "the") String testStr) {
+        return new Converter(counter.incrementAndGet(), "Markov", testData, testStr);
     }
 }

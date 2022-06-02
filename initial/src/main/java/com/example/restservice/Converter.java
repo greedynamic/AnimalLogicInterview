@@ -4,22 +4,28 @@ public class Converter {
 
     private final long id;
     private final String algo;
-    private final String textFileInput;
+    private final String inputData;
+    private final String testStr;
+    int ngrams = 3;
 
-    public Converter(long id, String algo, String content) {
+    public Converter(long id, String algo, String source, String str) {
         this.id = id;
         this.algo = algo;
-        this.textFileInput = content;
+        this.inputData = source;
+        this.testStr = str;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public String getAlgo() { return algo; }
+    public String getModel() { return algo; }
 
-    public String getContent() {
-        return textFileInput;
+    public String getSource() { return inputData; }
+
+    public String getNextChar() {
+        MarkovChain nextCharGenerator = new MarkovChain(inputData, ngrams);
+        String nextChar = nextCharGenerator.generateNextChar(testStr);
+        String result = String.format("The next possible character for %s: ", nextChar);
+        return result;
     }
 
 }

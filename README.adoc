@@ -2,7 +2,7 @@
 
 Build tool: IntelliJ IDEA
 
-You will build a service that will accept HTTP GET requests at
+The service will accept HTTP GET requests at
 `http://localhost:8080/converter`.
 
 It will respond with a JSON representation of a greeting, as the following listing shows:
@@ -60,7 +60,7 @@ NOTE: If your IDE has the Spring Initializr integration, you can complete this p
 NOTE: You can also fork the project from Github and open it in your IDE or other editor.
 
 [[initial]]
-== Create a Resource Representation Class
+== A Resource Representation Class
 
 Now that you have set up the project and build system, you can create your web service.
 

@@ -1,0 +1,112 @@
+== What You Need
+
+Build tool: IntelliJ IDEA
+
+JDK 1.8 or later
+
+Gradle 4+ or Maven 3.2+
+
+== How To Run The Service
+
+You can run the service from the command line with Gradle or Maven. You can also build a single executable JAR file that contains all the necessary dependencies, classes, and resources and run that. Building an executable jar makes it easy to ship, version, and deploy the service as an application throughout the development lifecycle, across different environments, and so forth.
+
+If you use Gradle, you can run the application by using `./gradlew bootRun`. Alternatively, you can build the JAR file by using ./gradlew build and then run the JAR file, as follows:
+
+
+```
+java -jar build/libs/gs-rest-service-0.1.0.jar
+```
+
+
+If you use Maven, you can run the application by using `./mvnw spring-boot:run`. Alternatively, you can build the JAR file with ./mvnw clean package and then run the JAR file, as follows:
+
+
+```
+java -jar target/gs-rest-service-0.1.0.jar
+```
+
+
+PS: If you run the service from the command line, you should run `./gradlew bootRun` or `./mvnw spring-boot:run` under `Markov-Chain-Implementation/initial` directory.
+
+
+== Explain The Service
+
+The service will accept HTTP GET requests at
+`http://localhost:8080/converter`.
+
+It will respond with a JSON representation of a greeting, as the following listing shows:
+
+====
+[source,json]
+----
+{"id":1,"model":"Markov","source":"the test text input for her task", "nextchar":"The next possible character for 'the': 'r'"}
+----
+====
+
+You can customize the converter with an optional `input` parameter in the query string, as
+the following listing shows:
+
+====
+[source,text]
+----
+http://localhost:8080/converter?input=her
+----
+====
+
+The `input` parameter value overrides the default value of `the` and is reflected in the
+response, as the following listing shows:
+
+====
+[source,json]
+----
+{"id":1,"model":"Markov","source":"the test text input for her task", "nextchar":"The next possible character for 'her': 't'"}
+----
+====
+
+[[scratch]]
+== Starting with Spring Initializr
+
+You can use this https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.5.5&packaging=jar&jvmVersion=11&groupId=com.example&artifactId=rest-service&name=rest-service&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.rest-service&dependencies=web[pre-initialized project] and click Generate to download a ZIP file. This project is configured to fit the examples in this tutorial.
+
+To manually initialize the project:
+
+. Navigate to https://start.spring.io.
+This service pulls in all the dependencies you need for an application and does most of the setup for you.
+. Choose either Gradle or Maven and the language you want to use. This guide assumes that you chose Java.
+. Click *Dependencies* and select *Spring Web*.
+. Click *Generate*.
+. Download the resulting ZIP file, which is an archive of a web application that is configured with your choices.
+
+NOTE: If your IDE has the Spring Initializr integration, you can complete this process from your IDE.
+
+NOTE: You can also fork the project from Github and open it in your IDE or other editor.
+
+[[initial]]
+== A Resource Representation Class
+
+Now that you have set up the project and build system, you can create your web service.
+
+Begin the process by thinking about service interactions.
+
+The service will handle `GET` requests for `/converter`, optionally with a `input` parameter
+in the query string. The `GET` request should return a `200 OK` response with JSON in the
+body that represents a greeting. It should resemble the following output:
+
+====
+[source,json]
+----
+{
+    "id": 1,
+    "model": "Markov",
+    "source": "the test text input for her task", 
+    "nextchar": "The next possible character for 'the': 'r'"
+}
+----
+====
+
+The `id` field is a unique identifier for the converter, and `source` is the source text data.
+
+====
+NOTE: This application uses the https://github.com/FasterXML/jackson[Jackson JSON] library to
+automatically marshal instances of type `Greeting` into JSON. Jackson is included by default by the web starter.
+====
